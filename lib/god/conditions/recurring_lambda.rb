@@ -3,7 +3,7 @@ module God
     
     # a lambda condition that may be met x out of y times
     class RecurringLambda < PollCondition
-      attr_accessor :times, :lambda
+      attr_accessor :times, :lambda, :name
       
       def initialize
         super
@@ -28,7 +28,7 @@ module God
         if self.lambda.call()
           @timeline.push("true*")
           history = "[" + @timeline.map {|x| "#{x}" }.join(", ") + "]"
-          self.info = "lambda condition was satisfied, yo #{history}"
+          self.info = "lambda condition was satisfied :: #{self.name} :: #{history}"
           if @timeline.select { |x| x == "true*" }.size >= self.times.first
             return true
           else
@@ -37,7 +37,7 @@ module God
         else
           @timeline.push("false")
           history = "[" + @timeline.map {|x| "#{x}" }.join(", ") + "]"
-          self.info = "lambda condition was not satisfied, brotha #{history}"
+          self.info = "lambda condition was not satisfied :: #{self.name} :: #{history}"
           return false
         end
       end
