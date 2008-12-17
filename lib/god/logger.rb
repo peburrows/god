@@ -13,7 +13,7 @@ module God
       attr_accessor :syslog
     end
     
-    self.syslog ||= true
+    self.syslog = (self.syslog == (nil || false)) ? false : true
     
     # Instantiate a new Logger object
     def initialize
@@ -32,7 +32,7 @@ module God
     #
     # Returns nothing
     def load_syslog
-      return unless Logger.syslog
+      return unless self.class.syslog
       
       begin
         require 'syslog'
@@ -71,7 +71,7 @@ module God
       self.send(level, text % [])
       
       # send to syslog
-      Syslog.send(SYSLOG_EQUIVALENTS[level], text) if Logger.syslog
+      Syslog.send(SYSLOG_EQUIVALENTS[level], text) if self.class.syslog
     end
     
     # Get all log output for a given Watch since a certain Time.

@@ -82,7 +82,7 @@ $:.unshift File.join(File.dirname(__FILE__), *%w[.. ext god])
 LOG = God::Logger.new
 
 def applog(watch, level, text)
-  LOG.log(watch, level, text)
+  LOG.log(watch, level, text) 
 end
 
 # The $run global determines whether god should be started when the
