@@ -94,6 +94,7 @@ def no_stdout
   old_stdout = $stdout.dup
   $stdout.reopen(File.open((PLATFORM =~ /mswin/ ? "NUL" : "/dev/null"), 'w'))
   yield
+ensure
   $stdout.reopen(old_stdout)
 end
 
@@ -101,6 +102,7 @@ def no_stderr
   old_stderr = $stderr.dup
   $stderr.reopen(File.open((PLATFORM =~ /mswin/ ? "NUL" : "/dev/null"), 'w'))
   yield
+ensure
   $stderr.reopen(old_stderr)
 end
 
